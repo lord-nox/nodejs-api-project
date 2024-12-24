@@ -6,16 +6,35 @@
 <body>
     <h1>API Documentatie</h1>
     <ul>
-        <li>GET /users - Haalt alle gebruikers op</li>
-        <li>GET /users/:id - Haalt een specifieke gebruiker op</li>
-        <li>POST /users - Voegt een nieuwe gebruiker toe</li>
-        <li>PUT /users/:id - Update een bestaande gebruiker</li>
-        <li>DELETE /users/:id - Verwijdert een gebruiker</li>
-        <li>GET /newsPosts - Haalt alle nieuwsartikelen op</li>
-        <li>GET /newsPosts/:id - Haalt een specifiek nieuwsartikel op</li>
-        <li>POST /newsPosts - Voegt een nieuw artikel toe</li>
-        <li>PUT /newsPosts/:id - Update een bestaand artikel</li>
-        <li>DELETE /newsPosts/:id - Verwijdert een artikel</li>
+        <li><strong>GET /users</strong>: Haalt alle gebruikers op</li>
+        <li><strong>GET /users/:id</strong>: Haalt een specifieke gebruiker op</li>
+        <li><strong>POST /users</strong>: Voegt een nieuwe gebruiker toe</li>
+        <li><strong>Structure:</strong>
+            <pre>
+              {
+                "name": "string",
+                "email": "string",
+                "age": "number"
+              }
+            </pre>
+        </li>
+        <li><strong>PUT /users/:id</strong>: Update een bestaande gebruiker</li>
+        <li><strong>DELETE /users/:id</strong>: Verwijdert een gebruiker</li>
+
+        <li><strong>GET /newsPosts</strong>: Haalt alle nieuwsartikelen op</li>
+        <li><strong>GET /newsPosts/:id</strong>: Haalt een specifiek nieuwsartikel op</li>
+        <li><strong>POST /newsPosts</strong>: Voegt een nieuw artikel toe</li>
+        <li><strong>Structure:</strong>
+            <pre>
+              {
+                "title": "string",
+                "content": "string",
+                "author": "string"
+              }
+            </pre>
+        </li>
+        <li><strong>PUT /newsPosts/:id</strong>: Update een bestaand artikel</li>
+        <li><strong>DELETE /newsPosts/:id</strong>: Verwijdert een artikel</li>
     </ul>
 </body>
 </html>

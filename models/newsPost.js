@@ -1,12 +1,20 @@
 const mongoose = require('mongoose');
 
-// Schema-definitie voor een NewsPost
 const newsPostSchema = new mongoose.Schema({
-    title: { type: String, required: true }, // Titel van de nieuwsbericht
-    content: { type: String, required: true }, // Inhoud van het nieuwsbericht
-    author: { type: String, required: true }, // Auteur van het nieuwsbericht
-    createdAt: { type: Date, default: Date.now }, // Datum en tijd van creatie
+    title: { 
+        type: String, 
+        required: [true, 'Titel is verplicht'],
+        minlength: [5, 'Titel moet minimaal 5 tekens bevatten']
+    },
+    content: { 
+        type: String, 
+        required: [true, 'Inhoud is verplicht'], 
+        minlength: [10, 'Inhoud moet minimaal 10 tekens bevatten']
+    },
+    author: { 
+        type: String, 
+        required: [true, 'Auteur is verplicht'] 
+    },
 });
 
-// Exporteren van het model
 module.exports = mongoose.model('NewsPost', newsPostSchema);
