@@ -14,7 +14,8 @@
               {
                 "name": "string",
                 "email": "string",
-                "age": "number"
+                "age": "number",
+                "phone": "+32 456 78 90 12" // Optioneel telefoonnummer in correct formaat
               }
             </pre>
         </li>
@@ -29,31 +30,38 @@
               {
                 "title": "string",
                 "content": "string",
-                "author": "string"
+                "author": "string",
+                "startDate": "YYYY-MM-DD", // Optioneel startdatum in correct formaat
+                "endDate": "YYYY-MM-DD"   // Optioneel einddatum in correct formaat
               }
             </pre>
         </li>
         <li><strong>PUT /newsPosts/:id</strong>: Update een bestaand artikel</li>
         <li><strong>DELETE /newsPosts/:id</strong>: Verwijdert een artikel</li>
-        </ul><br />
-        <hr><br />
-        <h2>Paginatie</h2>
-        <ul>
-            <li><strong>GET /users?limit={number}&offset={number}</strong>: Haalt een beperkt aantal gebruikers op, beginnend vanaf de opgegeven offset.</li>
-            <li><strong>GET /newsPosts?limit={number}&offset={number}</strong>: Haalt een beperkt aantal nieuwsartikelen op, beginnend vanaf de opgegeven offset.</li>
-        </ul>
-        <p><strong>Parameters:</strong></p>
-        <ul>
-            <li><strong>limit</strong>: Het maximale aantal resultaten dat moet worden opgehaald (standaard: 10).</li>
-            <li><strong>offset</strong>: Het aantal resultaten dat moet worden overgeslagen (standaard: 0).</li>
-        </ul>
-        <p><strong>Voorbeeld:</strong></p>
-        <pre>
-            GET /users?limit=5&offset=10
-        </pre>
-        <p>Dit haalt 5 gebruikers op, beginnend bij de 11e gebruiker.</p>
-        <br />
-        <hr><br />
+    </ul>
+    <br />
+    <hr>
+    <br />
+    <h2>Paginatie</h2>
+    <ul>
+        <li><strong>GET /users/paginated?limit={number}&offset={number}</strong>: Haalt een beperkt aantal gebruikers op, beginnend vanaf de opgegeven offset.</li>
+        <li><strong>GET /newsPosts/paginated?limit={number}&offset={number}</strong>: Haalt een beperkt aantal nieuwsartikelen op, beginnend vanaf de opgegeven offset.</li>
+    </ul>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+        <li><strong>limit</strong>: Het maximale aantal resultaten dat moet worden opgehaald (standaard: 10).</li>
+        <li><strong>offset</strong>: Het aantal resultaten dat moet worden overgeslagen (standaard: 0).</li>
+    </ul>
+    <p><strong>Voorbeeld:</strong></p>
+    <pre>
+        GET /users/paginated?limit=5&offset=10
+    </pre>
+    <p>Dit haalt 5 gebruikers op, beginnend bij de 11e gebruiker.</p>
+    <br />
+    <hr>
+    <br />
+    <h2>Zoeken</h2>
+    <ul>
         <li><strong>GET /users/search</strong>: Zoek gebruikers op basis van naam of e-mail</li>
         <li><strong>Query Parameters:</strong>
             <ul>
@@ -67,6 +75,6 @@
                 GET /users/search?email=john@example.com
             </pre>
         </li>
-
-    </body>
+    </ul>
+</body>
 </html>

@@ -15,6 +15,20 @@ const newsPostSchema = new mongoose.Schema({
         type: String, 
         required: [true, 'Auteur is verplicht'] 
     },
+    startDate: {
+        type: Date,
+        required: [true, 'Startdatum is verplicht']
+    },
+    endDate: {
+        type: Date,
+        required: [true, 'Einddatum is verplicht'],
+        validate: {
+            validator: function(value) {
+                return value > this.startDate; // Controleer of endDate na startDate ligt
+            },
+            message: 'Einddatum moet na de startdatum liggen.'
+        }
+    },
 });
 
 module.exports = mongoose.model('NewsPost', newsPostSchema);

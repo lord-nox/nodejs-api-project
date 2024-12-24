@@ -2,11 +2,19 @@ const express = require('express');
 const NewsPost = require('../models/newsPost');
 const router = express.Router();
 
-// 1. Fetch all news posts
+// 1. Fetch all news posts and make dates human readablle
 router.get('/', async (req, res) => {
     try {
         const newsPosts = await NewsPost.find();
-        res.status(200).json(newsPosts);
+
+        // Format the dates for each news post
+        const formattedNewsPosts = newsPosts.map(post => ({
+            ...post._doc,
+            startDate: post.startDate ? post.startDate.toISOString().split('T')[0] : undefined,
+            endDate: post.endDate ? post.endDate.toISOString().split('T')[0] : undefined,
+        }));
+
+        res.status(200).json(formattedNewsPosts);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching news posts', error });
     }
