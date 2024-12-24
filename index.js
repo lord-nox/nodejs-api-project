@@ -1,31 +1,43 @@
-app.use(express.static('public'));
-
-
-//Als setup-gedeelte
+// Importeer Express
 const express = require('express');
+
+// Importeer Mongoose voor MongoDB-verbinding
+const mongoose = require('mongoose');
+
+// Importeer routes
+const userRoutes = require('./routes/user');
+const newsPostRoutes = require('./routes/newsPost');
+
+// Initialiseer de Express-app
 const app = express();
 const port = 3000;
 
-app.use(express.json()); // Voor JSON-parsing
+// Middleware om statische bestanden te serveren (bijvoorbeeld de public map)
+app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.send('Welkom bij je Node.js API!');
-});
+// Middleware om JSON-requests te verwerken
+app.use(express.json());
 
-app.listen(port, () => {
-    console.log(`Server draait op http://localhost:${port}`);
-});
-
-
-//MongoDB verbinding-gedeelte
-const mongoose = require('mongoose');
-
+// MongoDB-verbinding
 mongoose.connect('mongodb://127.0.0.1:27017/nodejs-api', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
-    console.log('Verbonden met MongoDB');
+    console.log('Connected to MongoDB successfully');
 }).catch((err) => {
-    console.error('MongoDB-verbinding mislukt:', err.message);
+    console.error('Failed to connect to MongoDB:', err.message);
 });
 
+// Basisroute
+app.get('/', (req, res) => {
+    res.send('Welkom bij je Node.js API!');
+});
+
+// Koppelen van gebruikersroutes aan de server
+app.use('/users', userRoutes);
+app.use('/newsPosts', newsPostRoutes);
+
+// Start de server
+app.listen(port, () => {
+    console.log(`Server draait op http://localhost:${port}`);
+});
