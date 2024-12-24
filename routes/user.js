@@ -14,41 +14,66 @@ router.get('/paginated', async (req, res) => {
 
         res.status(200).json(users);
     } catch (error) {
-        res.status(500).json({ 
-            message: 'Error fetching users with pagination', 
-            error: error.message 
+        res.status(500).json({
+            message: 'Error fetching users with pagination',
+            error: error.message
         });
     }
 });
 
-// 2. Fetch all users
+// 2. Search users by a field (e.g., name or email)
+router.get('/search', async (req, res) => {
+    try {
+        const { name, email } = req.query; // Haal de zoekparameters op
+
+        let query = {};
+
+        // Stel dynamisch de zoekvoorwaarden op
+        if (name) {
+            query.name = new RegExp(name, 'i'); // Zoek naam (case-insensitive)
+        }
+        if (email) {
+            query.email = new RegExp(email, 'i'); // Zoek e-mail (case-insensitive)
+        }
+
+        const users = await User.find(query); // Zoek gebruikers in MongoDB
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error searching users',
+            error: error.message,
+        });
+    }
+});
+
+// 3. Fetch all users
 router.get('/', async (req, res) => {
     try {
         const users = await User.find(); // Fetch all users from MongoDB
         res.status(200).json(users);
     } catch (error) {
-        res.status(500).json({ 
-            message: 'Error fetching users', 
-            error: error.message 
+        res.status(500).json({
+            message: 'Error fetching users',
+            error: error.message
         });
     }
 });
 
-// 3. Fetch a specific user by ID
+// 4. Fetch a specific user by ID
 router.get('/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id); // Find user by ID
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ 
-            message: 'Error fetching user', 
-            error: error.message 
+        res.status(500).json({
+            message: 'Error fetching user',
+            error: error.message
         });
     }
 });
 
-// 4. Add a new user
+// 5. Add a new user
 router.post('/', async (req, res) => {
     try {
         const { name, email } = req.body;
@@ -62,40 +87,40 @@ router.post('/', async (req, res) => {
         await user.save(); // Save user to the database
         res.status(201).json(user);
     } catch (error) {
-        res.status(400).json({ 
-            message: 'Error adding user', 
-            error: error.message 
+        res.status(400).json({
+            message: 'Error adding user',
+            error: error.message
         });
     }
 });
 
-// 5. Update an existing user
+// 6. Update an existing user
 router.put('/:id', async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { 
-            new: true, 
-            runValidators: true 
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
         });
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json(user);
     } catch (error) {
-        res.status(400).json({ 
-            message: 'Error updating user', 
-            error: error.message 
+        res.status(400).json({
+            message: 'Error updating user',
+            error: error.message
         });
     }
 });
 
-// 6. Delete a user
+// 7. Delete a user
 router.delete('/:id', async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json({ message: 'User deleted' });
     } catch (error) {
-        res.status(500).json({ 
-            message: 'Error deleting user', 
-            error: error.message 
+        res.status(500).json({
+            message: 'Error deleting user',
+            error: error.message
         });
     }
 });

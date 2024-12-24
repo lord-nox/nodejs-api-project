@@ -35,8 +35,8 @@
         </li>
         <li><strong>PUT /newsPosts/:id</strong>: Update een bestaand artikel</li>
         <li><strong>DELETE /newsPosts/:id</strong>: Verwijdert een artikel</li>
-        </ul>
-
+        </ul><br />
+        <hr><br />
         <h2>Paginatie</h2>
         <ul>
             <li><strong>GET /users?limit={number}&offset={number}</strong>: Haalt een beperkt aantal gebruikers op, beginnend vanaf de opgegeven offset.</li>
@@ -52,6 +52,21 @@
             GET /users?limit=5&offset=10
         </pre>
         <p>Dit haalt 5 gebruikers op, beginnend bij de 11e gebruiker.</p>
+        <br />
+        <hr><br />
+        <li><strong>GET /users/search</strong>: Zoek gebruikers op basis van naam of e-mail</li>
+        <li><strong>Query Parameters:</strong>
+            <ul>
+                <li><strong>name</strong>: (optioneel) De naam van de gebruiker</li>
+                <li><strong>email</strong>: (optioneel) Het e-mailadres van de gebruiker</li>
+            </ul>
+        </li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /users/search?name=John
+                GET /users/search?email=john@example.com
+            </pre>
+        </li>
 
     </body>
 </html>
