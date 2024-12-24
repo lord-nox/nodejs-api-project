@@ -2,57 +2,76 @@ const express = require('express');
 const NewsPost = require('../models/newsPost');
 const router = express.Router();
 
-// 1. Haal een lijst van alle nieuwsberichten op
+// 1. Fetch all news posts
 router.get('/', async (req, res) => {
     try {
         const newsPosts = await NewsPost.find();
         res.status(200).json(newsPosts);
     } catch (error) {
-        res.status(500).json({ message: 'Fout bij ophalen van nieuwsberichten', error });
+        res.status(500).json({ message: 'Error fetching news posts', error });
     }
 });
 
-// 2. Haal details van een specifiek nieuwsbericht op
+// 2. Fetch a news post by ID
 router.get('/:id', async (req, res) => {
     try {
         const newsPost = await NewsPost.findById(req.params.id);
-        if (!newsPost) return res.status(404).json({ message: 'Nieuwsbericht niet gevonden' });
+        if (!newsPost) return res.status(404).json({ message: 'News post not found' });
         res.status(200).json(newsPost);
     } catch (error) {
-        res.status(500).json({ message: 'Fout bij ophalen van nieuwsbericht', error });
+        res.status(500).json({ message: 'Error fetching news post', error });
     }
 });
 
-// 3. Voeg een nieuw nieuwsbericht toe
+// 3. Fetch news posts with limit and offset
+router.get('/paginated', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = parseInt(req.query.offset) || 0;
+
+        const newsPosts = await NewsPost.find()
+            .skip(offset)
+            .limit(limit);
+
+        res.status(200).json(newsPosts);
+    } catch (error) {
+        res.status(500).json({ 
+            message: 'Error fetching news posts with pagination', 
+            error: error.message 
+        });
+    }
+});
+
+// 4. Add a news post
 router.post('/', async (req, res) => {
     try {
         const newsPost = new NewsPost(req.body);
         await newsPost.save();
         res.status(201).json(newsPost);
     } catch (error) {
-        res.status(400).json({ message: 'Fout bij toevoegen van nieuwsbericht', error });
+        res.status(400).json({ message: 'Error adding news post', error });
     }
 });
 
-// 4. Update een bestaand nieuwsbericht
+// 5. Update a news post
 router.put('/:id', async (req, res) => {
     try {
         const newsPost = await NewsPost.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!newsPost) return res.status(404).json({ message: 'Nieuwsbericht niet gevonden' });
+        if (!newsPost) return res.status(404).json({ message: 'News post not found' });
         res.status(200).json(newsPost);
     } catch (error) {
-        res.status(400).json({ message: 'Fout bij bijwerken van nieuwsbericht', error });
+        res.status(400).json({ message: 'Error updating news post', error });
     }
 });
 
-// 5. Verwijder een nieuwsbericht
+// 6. Delete a news post
 router.delete('/:id', async (req, res) => {
     try {
         const newsPost = await NewsPost.findByIdAndDelete(req.params.id);
-        if (!newsPost) return res.status(404).json({ message: 'Nieuwsbericht niet gevonden' });
-        res.status(200).json({ message: 'Nieuwsbericht verwijderd' });
+        if (!newsPost) return res.status(404).json({ message: 'News post not found' });
+        res.status(200).json({ message: 'News post deleted' });
     } catch (error) {
-        res.status(500).json({ message: 'Fout bij verwijderen van nieuwsbericht', error });
+        res.status(500).json({ message: 'Error deleting news post', error });
     }
 });
 

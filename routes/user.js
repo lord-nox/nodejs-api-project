@@ -2,7 +2,26 @@ const express = require('express');
 const User = require('../models/user'); // Import the User model
 const router = express.Router();
 
-// 1. Fetch all users
+// 1. Fetch users with limit and offset
+router.get('/paginated', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = parseInt(req.query.offset) || 0;
+
+        const users = await User.find()
+            .skip(offset)
+            .limit(limit);
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ 
+            message: 'Error fetching users with pagination', 
+            error: error.message 
+        });
+    }
+});
+
+// 2. Fetch all users
 router.get('/', async (req, res) => {
     try {
         const users = await User.find(); // Fetch all users from MongoDB
@@ -15,7 +34,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 2. Fetch a specific user by ID
+// 3. Fetch a specific user by ID
 router.get('/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id); // Find user by ID
@@ -29,7 +48,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// 3. Add a new user
+// 4. Add a new user
 router.post('/', async (req, res) => {
     try {
         const { name, email } = req.body;
@@ -50,13 +69,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-// 4. Update an existing user
+// 5. Update an existing user
 router.put('/:id', async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { 
             new: true, 
             runValidators: true 
-        }); // Update user by ID
+        });
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json(user);
     } catch (error) {
@@ -67,10 +86,10 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// 5. Delete a user
+// 6. Delete a user
 router.delete('/:id', async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id); // Delete user by ID
+        const user = await User.findByIdAndDelete(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json({ message: 'User deleted' });
     } catch (error) {

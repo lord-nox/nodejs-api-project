@@ -35,6 +35,23 @@
         </li>
         <li><strong>PUT /newsPosts/:id</strong>: Update een bestaand artikel</li>
         <li><strong>DELETE /newsPosts/:id</strong>: Verwijdert een artikel</li>
-    </ul>
-</body>
+        </ul>
+
+        <h2>Paginatie</h2>
+        <ul>
+            <li><strong>GET /users?limit={number}&offset={number}</strong>: Haalt een beperkt aantal gebruikers op, beginnend vanaf de opgegeven offset.</li>
+            <li><strong>GET /newsPosts?limit={number}&offset={number}</strong>: Haalt een beperkt aantal nieuwsartikelen op, beginnend vanaf de opgegeven offset.</li>
+        </ul>
+        <p><strong>Parameters:</strong></p>
+        <ul>
+            <li><strong>limit</strong>: Het maximale aantal resultaten dat moet worden opgehaald (standaard: 10).</li>
+            <li><strong>offset</strong>: Het aantal resultaten dat moet worden overgeslagen (standaard: 0).</li>
+        </ul>
+        <p><strong>Voorbeeld:</strong></p>
+        <pre>
+            GET /users?limit=5&offset=10
+        </pre>
+        <p>Dit haalt 5 gebruikers op, beginnend bij de 11e gebruiker.</p>
+
+    </body>
 </html>
