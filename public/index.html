@@ -7,7 +7,17 @@
     <h1>API Documentatie</h1>
     <ul>
         <li><strong>GET /users</strong>: Haalt alle gebruikers op</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /users
+            </pre>
+        </li>
         <li><strong>GET /users/:id</strong>: Haalt een specifieke gebruiker op</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /users/676a9652ae0822592b41f641
+            </pre>
+        </li>
         <li><strong>POST /users</strong>: Voegt een nieuwe gebruiker toe</li>
         <li><strong>Structure:</strong>
             <pre>
@@ -19,11 +29,48 @@
               }
             </pre>
         </li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                POST /users
+                Body:
+                {
+                  "name": "John Doe",
+                  "email": "john.doe@example.com",
+                  "age": 30,
+                  "phone": "+32 456 78 90 12"
+                }
+            </pre>
+        </li>
         <li><strong>PUT /users/:id</strong>: Update een bestaande gebruiker</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                PUT /users/676a9652ae0822592b41f641
+                Body:
+                {
+                  "name": "John Updated",
+                  "email": "john.updated@example.com"
+                }
+            </pre>
+        </li>
         <li><strong>DELETE /users/:id</strong>: Verwijdert een gebruiker</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                DELETE /users/676a9652ae0822592b41f641
+            </pre>
+        </li>
 
         <li><strong>GET /newsPosts</strong>: Haalt alle nieuwsartikelen op</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /newsPosts
+            </pre>
+        </li>
         <li><strong>GET /newsPosts/:id</strong>: Haalt een specifiek nieuwsartikel op</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /newsPosts/676a9652ae0822592b41f641
+            </pre>
+        </li>
         <li><strong>POST /newsPosts</strong>: Voegt een nieuw artikel toe</li>
         <li><strong>Structure:</strong>
             <pre>
@@ -36,8 +83,36 @@
               }
             </pre>
         </li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                POST /newsPosts
+                Body:
+                {
+                  "title": "Breaking News",
+                  "content": "This is a test news post.",
+                  "author": "John Doe",
+                  "startDate": "2024-12-20",
+                  "endDate": "2024-12-25"
+                }
+            </pre>
+        </li>
         <li><strong>PUT /newsPosts/:id</strong>: Update een bestaand artikel</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                PUT /newsPosts/676a9652ae0822592b41f641
+                Body:
+                {
+                  "title": "Updated Title",
+                  "content": "Updated content."
+                }
+            </pre>
+        </li>
         <li><strong>DELETE /newsPosts/:id</strong>: Verwijdert een artikel</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                DELETE /newsPosts/676a9652ae0822592b41f641
+            </pre>
+        </li>
     </ul>
     <br />
     <hr>
@@ -45,18 +120,18 @@
     <h2>Paginatie</h2>
     <ul>
         <li><strong>GET /users/paginated?limit={number}&offset={number}</strong>: Haalt een beperkt aantal gebruikers op, beginnend vanaf de opgegeven offset.</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /users/paginated?limit=5&offset=10
+            </pre>
+        </li>
         <li><strong>GET /newsPosts/paginated?limit={number}&offset={number}</strong>: Haalt een beperkt aantal nieuwsartikelen op, beginnend vanaf de opgegeven offset.</li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /newsPosts/paginated?limit=5&offset=10
+            </pre>
+        </li>
     </ul>
-    <p><strong>Parameters:</strong></p>
-    <ul>
-        <li><strong>limit</strong>: Het maximale aantal resultaten dat moet worden opgehaald (standaard: 10).</li>
-        <li><strong>offset</strong>: Het aantal resultaten dat moet worden overgeslagen (standaard: 0).</li>
-    </ul>
-    <p><strong>Voorbeeld:</strong></p>
-    <pre>
-        GET /users/paginated?limit=5&offset=10
-    </pre>
-    <p>Dit haalt 5 gebruikers op, beginnend bij de 11e gebruiker.</p>
     <br />
     <hr>
     <br />

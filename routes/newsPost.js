@@ -8,8 +8,14 @@ router.get('/advanced-search', async (req, res) => {
         const { title, author, startDate, endDate } = req.query;
 
         let query = {};
-        if (title) query.title = { $regex: title, $options: 'i' }; // Case-insensitive search for title
-        if (author) query.author = { $regex: author, $options: 'i' }; // Case-insensitive search for author
+
+        // Case-insensitive search for title
+        if (title) query.title = { $regex: title, $options: 'i' };
+
+        // Case-insensitive search for author
+        if (author) query.author = { $regex: author, $options: 'i' };
+
+        // Date range filtering for startDate and endDate
         if (startDate || endDate) {
             query.startDate = {};
             if (startDate) query.startDate.$gte = new Date(startDate); // Greater or equal to start date
@@ -17,7 +23,15 @@ router.get('/advanced-search', async (req, res) => {
         }
 
         const newsPosts = await NewsPost.find(query);
-        res.status(200).json(newsPosts);
+
+        // Format the dates for each news post
+        const formattedNewsPosts = newsPosts.map(post => ({
+            ...post._doc,
+            startDate: post.startDate ? post.startDate.toISOString().split('T')[0] : undefined,
+            endDate: post.endDate ? post.endDate.toISOString().split('T')[0] : undefined,
+        }));
+
+        res.status(200).json(formattedNewsPosts);
     } catch (error) {
         res.status(500).json({
             message: 'Error performing advanced news post search',
@@ -25,7 +39,8 @@ router.get('/advanced-search', async (req, res) => {
         });
     }
 });
-// 1. Fetch all news posts and make dates human readablle
+
+// 1. Fetch all news posts and make dates human-readable
 router.get('/', async (req, res) => {
     try {
         const newsPosts = await NewsPost.find();
@@ -64,30 +79,53 @@ router.get('/paginated', async (req, res) => {
             .skip(offset)
             .limit(limit);
 
-        res.status(200).json(newsPosts);
+        // Format the dates for each news post
+        const formattedNewsPosts = newsPosts.map(post => ({
+            ...post._doc,
+            startDate: post.startDate ? post.startDate.toISOString().split('T')[0] : undefined,
+            endDate: post.endDate ? post.endDate.toISOString().split('T')[0] : undefined,
+        }));
+
+        res.status(200).json(formattedNewsPosts);
     } catch (error) {
-        res.status(500).json({ 
-            message: 'Error fetching news posts with pagination', 
-            error: error.message 
+        res.status(500).json({
+            message: 'Error fetching news posts with pagination',
+            error: error.message,
         });
     }
 });
 
-// 4. Add a news post
+// 4. Add one or multiple news posts
 router.post('/', async (req, res) => {
     try {
-        const newsPost = new NewsPost(req.body);
-        await newsPost.save();
-        res.status(201).json(newsPost);
+        const newsPosts = Array.isArray(req.body) ? req.body : [req.body];
+
+        // Validate each news post
+        for (const post of newsPosts) {
+            const { title, content, author, startDate, endDate } = post;
+
+            if (!title || !content || !author || !startDate || !endDate) {
+                return res.status(400).json({
+                    message: 'All fields are required: title, content, author, startDate, endDate',
+                });
+            }
+        }
+
+        // Insert the news posts into the database
+        const insertedPosts = await NewsPost.insertMany(newsPosts);
+        res.status(201).json(insertedPosts);
     } catch (error) {
-        res.status(400).json({ message: 'Error adding news post', error });
+        res.status(400).json({ message: 'Error adding news posts', error });
     }
 });
 
 // 5. Update a news post
 router.put('/:id', async (req, res) => {
     try {
-        const newsPost = await NewsPost.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const newsPost = await NewsPost.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        });
         if (!newsPost) return res.status(404).json({ message: 'News post not found' });
         res.status(200).json(newsPost);
     } catch (error) {
