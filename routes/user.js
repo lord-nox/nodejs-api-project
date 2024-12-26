@@ -20,7 +20,6 @@ router.get('/paginated', async (req, res) => {
         });
     }
 });
-
 // 2. Search users by a field (e.g., name or email)
 router.get('/search', async (req, res) => {
     try {
@@ -41,6 +40,31 @@ router.get('/search', async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: 'Error searching users',
+            error: error.message,
+        });
+    }
+});
+
+// Advanced search for users by multiple fields
+router.get('/advanced-search', async (req, res) => {
+    try {
+        const { name, email, phone } = req.query;
+
+        // Build query dynamically
+        let query = {};
+        if (name) query.name = new RegExp(name, 'i'); // Partial case-insensitive match
+        if (email) query.email = new RegExp(email, 'i'); // Partial case-insensitive match
+        if (phone) query.phone = new RegExp(phone.replace(/\s+/g, '\\s*'), 'i'); // Handle spaces in phone numbers
+
+        // Log query and database content for debugging
+        console.log('Query:', query);
+        console.log('Database Content:', await User.find());
+
+        const users = await User.find(query); // Execute query
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error performing advanced user search',
             error: error.message,
         });
     }

@@ -2,6 +2,29 @@ const express = require('express');
 const NewsPost = require('../models/newsPost');
 const router = express.Router();
 
+// Advanced search for news posts by multiple fields
+router.get('/advanced-search', async (req, res) => {
+    try {
+        const { title, author, startDate, endDate } = req.query;
+
+        let query = {};
+        if (title) query.title = { $regex: title, $options: 'i' }; // Case-insensitive search for title
+        if (author) query.author = { $regex: author, $options: 'i' }; // Case-insensitive search for author
+        if (startDate || endDate) {
+            query.startDate = {};
+            if (startDate) query.startDate.$gte = new Date(startDate); // Greater or equal to start date
+            if (endDate) query.startDate.$lte = new Date(endDate); // Less or equal to end date
+        }
+
+        const newsPosts = await NewsPost.find(query);
+        res.status(200).json(newsPosts);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error performing advanced news post search',
+            error: error.message,
+        });
+    }
+});
 // 1. Fetch all news posts and make dates human readablle
 router.get('/', async (req, res) => {
     try {

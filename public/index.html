@@ -76,5 +76,39 @@
             </pre>
         </li>
     </ul>
+    <br />
+    <hr>
+    <br />
+    <h2>Geavanceerd zoeken</h2>
+    <ul>
+        <li><strong>GET /users/advanced-search</strong>: Zoek gebruikers op basis van meerdere velden.</li>
+        <li><strong>Query Parameters:</strong>
+            <ul>
+                <li><strong>name</strong>: De naam van de gebruiker</li>
+                <li><strong>email</strong>: Het e-mailadres van de gebruiker</li>
+                <li><strong>phone</strong>: Het telefoonnummer van de gebruiker</li>
+            </ul>
+        </li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /users/advanced-search?name=John&email=john@example.com
+            </pre>
+        </li>
+
+        <li><strong>GET /newsPosts/advanced-search</strong>: Zoek nieuwsartikelen op basis van meerdere velden.</li>
+        <li><strong>Query Parameters:</strong>
+            <ul>
+                <li><strong>title</strong>: De titel van het artikel</li>
+                <li><strong>author</strong>: De auteur van het artikel</li>
+                <li><strong>startDate</strong>: Zoek vanaf deze datum (YYYY-MM-DD)</li>
+                <li><strong>endDate</strong>: Zoek tot deze datum (YYYY-MM-DD)</li>
+            </ul>
+        </li>
+        <li><strong>Voorbeeld:</strong>
+            <pre>
+                GET /newsPosts/advanced-search?title=Breaking&author=John&startDate=2024-01-01
+            </pre>
+        </li>
+    </ul>
 </body>
 </html>
