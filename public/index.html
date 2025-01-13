@@ -1,189 +1,62 @@
+<!-- public/index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-    <title>API Documentatie</title>
+  <meta charset="UTF-8">
+  <title>Home - Node.js API</title>
 </head>
 <body>
-    <h1>API Documentatie</h1>
-    <ul>
-        <li><strong>GET /users</strong>: Haalt alle gebruikers op</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /users
-            </pre>
-        </li>
-        <li><strong>GET /users/:id</strong>: Haalt een specifieke gebruiker op</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /users/676a9652ae0822592b41f641
-            </pre>
-        </li>
-        <li><strong>POST /users</strong>: Voegt een nieuwe gebruiker toe</li>
-        <li><strong>Structure:</strong>
-            <pre>
-              {
-                "name": "string",
-                "email": "string",
-                "age": "number",
-                "phone": "+32 456 78 90 12" // Optioneel telefoonnummer in correct formaat
-              }
-            </pre>
-        </li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                POST /users
-                Body:
-                {
-                  "name": "John Doe",
-                  "email": "john.doe@example.com",
-                  "age": 30,
-                  "phone": "+32 456 78 90 12"
-                }
-            </pre>
-        </li>
-        <li><strong>PUT /users/:id</strong>: Update een bestaande gebruiker</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                PUT /users/676a9652ae0822592b41f641
-                Body:
-                {
-                  "name": "John Updated",
-                  "email": "john.updated@example.com"
-                }
-            </pre>
-        </li>
-        <li><strong>DELETE /users/:id</strong>: Verwijdert een gebruiker</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                DELETE /users/676a9652ae0822592b41f641
-            </pre>
-        </li>
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="login.html">Login</a> |
+    <a href="register.html">Register</a> |
+    <a href="documentatie.html">Documentatie</a>
+  </nav>
 
-        <li><strong>GET /newsPosts</strong>: Haalt alle nieuwsartikelen op</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /newsPosts
-            </pre>
-        </li>
-        <li><strong>GET /newsPosts/:id</strong>: Haalt een specifiek nieuwsartikel op</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /newsPosts/676a9652ae0822592b41f641
-            </pre>
-        </li>
-        <li><strong>POST /newsPosts</strong>: Voegt een nieuw artikel toe</li>
-        <li><strong>Structure:</strong>
-            <pre>
-              {
-                "title": "string",
-                "content": "string",
-                "author": "string",
-                "startDate": "YYYY-MM-DD", // Optioneel startdatum in correct formaat
-                "endDate": "YYYY-MM-DD"   // Optioneel einddatum in correct formaat
-              }
-            </pre>
-        </li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                POST /newsPosts
-                Body:
-                {
-                  "title": "Breaking News",
-                  "content": "This is a test news post.",
-                  "author": "John Doe",
-                  "startDate": "2024-12-20",
-                  "endDate": "2024-12-25"
-                }
-            </pre>
-        </li>
-        <li><strong>PUT /newsPosts/:id</strong>: Update een bestaand artikel</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                PUT /newsPosts/676a9652ae0822592b41f641
-                Body:
-                {
-                  "title": "Updated Title",
-                  "content": "Updated content."
-                }
-            </pre>
-        </li>
-        <li><strong>DELETE /newsPosts/:id</strong>: Verwijdert een artikel</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                DELETE /newsPosts/676a9652ae0822592b41f641
-            </pre>
-        </li>
-    </ul>
-    <br />
-    <hr>
-    <br />
-    <h2>Paginatie</h2>
-    <ul>
-        <li><strong>GET /users/paginated?limit={number}&offset={number}</strong>: Haalt een beperkt aantal gebruikers op, beginnend vanaf de opgegeven offset.</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /users/paginated?limit=5&offset=10
-            </pre>
-        </li>
-        <li><strong>GET /newsPosts/paginated?limit={number}&offset={number}</strong>: Haalt een beperkt aantal nieuwsartikelen op, beginnend vanaf de opgegeven offset.</li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /newsPosts/paginated?limit=5&offset=10
-            </pre>
-        </li>
-    </ul>
-    <br />
-    <hr>
-    <br />
-    <h2>Zoeken</h2>
-    <ul>
-        <li><strong>GET /users/search</strong>: Zoek gebruikers op basis van naam of e-mail</li>
-        <li><strong>Query Parameters:</strong>
-            <ul>
-                <li><strong>name</strong>: (optioneel) De naam van de gebruiker</li>
-                <li><strong>email</strong>: (optioneel) Het e-mailadres van de gebruiker</li>
-            </ul>
-        </li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /users/search?name=John
-                GET /users/search?email=john@example.com
-            </pre>
-        </li>
-    </ul>
-    <br />
-    <hr>
-    <br />
-    <h2>Geavanceerd zoeken</h2>
-    <ul>
-        <li><strong>GET /users/advanced-search</strong>: Zoek gebruikers op basis van meerdere velden.</li>
-        <li><strong>Query Parameters:</strong>
-            <ul>
-                <li><strong>name</strong>: De naam van de gebruiker</li>
-                <li><strong>email</strong>: Het e-mailadres van de gebruiker</li>
-                <li><strong>phone</strong>: Het telefoonnummer van de gebruiker</li>
-            </ul>
-        </li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /users/advanced-search?name=John&email=john@example.com
-            </pre>
-        </li>
+  <h1>Welkom bij mijn Node.js API</h1>
+  
+  <p>
+    Dit project demonstreert een eenvoudige Node.js API met Express en MongoDB.
+    Je kunt gebruikers (Users) en nieuwsartikelen (NewsPosts) beheren, zoeken,
+    en geavanceerde validaties uitvoeren.
+  </p>
 
-        <li><strong>GET /newsPosts/advanced-search</strong>: Zoek nieuwsartikelen op basis van meerdere velden.</li>
-        <li><strong>Query Parameters:</strong>
-            <ul>
-                <li><strong>title</strong>: De titel van het artikel</li>
-                <li><strong>author</strong>: De auteur van het artikel</li>
-                <li><strong>startDate</strong>: Zoek vanaf deze datum (YYYY-MM-DD)</li>
-                <li><strong>endDate</strong>: Zoek tot deze datum (YYYY-MM-DD)</li>
-            </ul>
-        </li>
-        <li><strong>Voorbeeld:</strong>
-            <pre>
-                GET /newsPosts/advanced-search?title=Breaking&author=John&startDate=2024-01-01
-            </pre>
-        </li>
-    </ul>
+  <p>
+    Hieronder vind je een beknopt overzicht van de functionaliteiten. 
+    Voor de volledige lijst met endpoints, zie 
+    <a href="documentatie.html">Documentatie</a>.
+  </p>
+
+  <h2>Functionaliteiten</h2>
+  <ul>
+    <li><strong>Users</strong> – CRUD, zoeken, geavanceerd zoeken, paginatie.</li>
+    <li><strong>NewsPosts</strong> – CRUD, zoeken, geavanceerd zoeken, paginatie.</li>
+    <li><strong>Authenticatie</strong> – Registreren en inloggen.</li>
+  </ul>
+
+  <h2>Hoe testen?</h2>
+  <ol>
+    <li><strong>Frontend</strong>: Gebruik de 
+      <a href="login.html">Login</a>, 
+      <a href="register.html">Register</a>
+      of bezoek 
+      <a href="documentatie.html">Documentatie</a> voor API-details.
+    </li>
+    <li><strong>Postman / cURL</strong>:
+      <ul>
+        <li>GET <code>http://localhost:3000/api/users</code> (alle users)</li>
+        <li>POST <code>http://localhost:3000/api/users</code> (nieuwe user)</li>
+        <li>... etc.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>Broncode</h2>
+  <p>
+    De volledige broncode staat in de GitHub repository. 
+    Volg de instructies in <code>README.md</code> om het project lokaal te draaien.
+  </p>
+
+  <p><em>Bedankt voor je bezoek!</em></p>
 </body>
 </html>

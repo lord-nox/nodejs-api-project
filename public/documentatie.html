@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>API Documentatie</title>
+</head>
+<body>
+    <!-- Simple navigation bar -->
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="login.html">Login</a> |
+      <a href="register.html">Register</a> |
+      <a href="documentatie.html">Documentatie</a>
+    </nav>
+
+    <h1>API Documentatie</h1>
+    
+    <!-- USERS -->
+    <h2>Users</h2>
+    <ul>
+      <li><strong>GET /api/users</strong>  
+          <br>Haalt alle gebruikers op.
+          <pre><code>GET /api/users</code></pre>
+      </li>
+      <li><strong>GET /api/users/:id</strong>  
+          <br>Haalt een specifieke gebruiker op.
+          <pre><code>GET /api/users/676a9652ae0822592b41f641</code></pre>
+      </li>
+      <li><strong>POST /api/users</strong>  
+          <br>Voegt een nieuwe gebruiker toe.
+          <br><em>Body-structuur:</em>
+          <pre><code>{
+  "name": "string",
+  "email": "string",
+  "age": 30,
+  "phone": "+32 456 78 90 12"
+}
+</code></pre>
+          <em>Voorbeeld:</em>
+          <pre><code>POST /api/users
+Body:
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "age": 30,
+  "phone": "+32 456 78 90 12"
+}
+</code></pre>
+      </li>
+      <li><strong>PUT /api/users/:id</strong>  
+          <br>Update een bestaande gebruiker.
+          <pre><code>PUT /api/users/676a9652ae0822592b41f641
+Body:
+{
+  "name": "John Updated",
+  "email": "john.updated@example.com"
+}
+</code></pre>
+      </li>
+      <li><strong>DELETE /api/users/:id</strong>  
+          <br>Verwijdert een gebruiker.
+          <pre><code>DELETE /api/users/676a9652ae0822592b41f641</code></pre>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- NEWSPOSTS -->
+    <h2>NewsPosts</h2>
+    <ul>
+      <li><strong>GET /api/news</strong>  
+          <br>Haalt alle nieuwsartikelen op.
+          <pre><code>GET /api/news</code></pre>
+      </li>
+      <li><strong>GET /api/news/:id</strong>  
+          <br>Haalt een specifiek nieuwsartikel op.
+          <pre><code>GET /api/news/676a9652ae0822592b41f641</code></pre>
+      </li>
+      <li><strong>POST /api/news</strong>  
+          <br>Voegt een nieuw artikel toe.
+          <br><em>Body-structuur:</em>
+          <pre><code>{
+  "title": "string",
+  "content": "string",
+  "author": "string",
+  "startDate": "YYYY-MM-DD",
+  "endDate": "YYYY-MM-DD"
+}
+</code></pre>
+          <em>Voorbeeld:</em>
+          <pre><code>POST /api/news
+Body:
+{
+  "title": "Breaking News",
+  "content": "This is a test news post.",
+  "author": "John Doe",
+  "startDate": "2024-12-20",
+  "endDate": "2024-12-25"
+}
+</code></pre>
+      </li>
+      <li><strong>PUT /api/news/:id</strong>  
+          <br>Update een bestaand artikel.
+          <pre><code>PUT /api/news/676a9652ae0822592b41f641
+Body:
+{
+  "title": "Updated Title",
+  "content": "Updated content."
+}
+</code></pre>
+      </li>
+      <li><strong>DELETE /api/news/:id</strong>  
+          <br>Verwijdert een artikel.
+          <pre><code>DELETE /api/news/676a9652ae0822592b41f641</code></pre>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- PAGINATION -->
+    <h2>Paginatie</h2>
+    <ul>
+      <li><strong>GET /api/users/paginated?limit=...&offset=...</strong>
+          <br>Haalt een beperkt aantal gebruikers op.
+          <pre><code>GET /api/users/paginated?limit=5&offset=10</code></pre>
+      </li>
+      <li><strong>GET /api/news/paginated?limit=...&offset=...</strong>
+          <br>Haalt een beperkt aantal nieuwsartikelen op.
+          <pre><code>GET /api/news/paginated?limit=5&offset=10</code></pre>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- BASIC SEARCH -->
+    <h2>Zoeken</h2>
+    <ul>
+      <li><strong>GET /api/users/search?name=...&email=...</strong>
+          <br>Zoek gebruikers op basis van naam of e-mail.
+          <pre><code>GET /api/users/search?name=John
+GET /api/users/search?email=john@example.com
+</code></pre>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- ADVANCED SEARCH -->
+    <h2>Geavanceerd zoeken</h2>
+    <ul>
+      <li><strong>GET /api/users/advanced-search</strong>
+          <br>Zoek gebruikers op basis van meerdere velden (bijv. naam, email, phone).
+          <pre><code>GET /api/users/advanced-search?name=John&email=john@example.com</code></pre>
+      </li>
+      <li><strong>GET /api/news/advanced-search</strong>
+          <br>Zoek nieuwsartikelen op basis van titel, auteur, start- of einddatum.
+          <pre><code>GET /api/news/advanced-search?title=Breaking&author=John&startDate=2024-01-01</code></pre>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- AUTH -->
+    <h2>Authenticatie</h2>
+    <p>Er zijn ook eenvoudige auth endpoints:</p>
+    <ul>
+      <li><strong>POST /api/auth/register</strong> → registreer een gebruiker (naam, email, password, ...)</li>
+      <li><strong>POST /api/auth/login</strong> → login met email en password</li>
+    </ul>
+</body>
+</html>

@@ -1,43 +1,40 @@
-// Importeer Express
+// index.js
 const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
 
-// Importeer Mongoose voor MongoDB-verbinding
-const mongoose = require('mongoose');
-
-// Importeer routes
+// Routes
 const userRoutes = require('./routes/user');
-const newsPostRoutes = require('./routes/newsPost');
+const newsRoutes = require('./routes/newsPost');
+const authRoutes = require('./routes/auth'); // Voor login/register
 
-// Initialiseer de Express-app
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware om statische bestanden te serveren (bijvoorbeeld de public map)
-app.use(express.static('public'));
+// Connect to MongoDB
+connectDB();
 
-// Middleware om JSON-requests te verwerken
+// Middleware
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// MongoDB-verbinding
-mongoose.connect('mongodb://127.0.0.1:27017/nodejs-api', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log('Connected to MongoDB successfully');
-}).catch((err) => {
-    console.error('Failed to connect to MongoDB:', err.message);
-});
+// Statische bestanden (HTML, CSS, JS)
+app.use(express.static('public')); 
 
-// Basisroute
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/news', newsRoutes);
+app.use('/api/auth', authRoutes); // login en register
+
+// Root endpoint -> toon index.html (documentatie)
 app.get('/', (req, res) => {
-    res.send('Welkom bij je Node.js API!');
+  // Dit zal automatisch 'public/index.html' renderen als je / bezoekt
+  // of doe expliciet:
+  // res.sendFile(__dirname + '/public/index.html');
+  res.sendFile('index.html', { root: __dirname + '/public' });
 });
 
-// Koppelen van gebruikersroutes aan de server
-app.use('/users', userRoutes);
-app.use('/newsPosts', newsPostRoutes);
-
-// Start de server
-app.listen(port, () => {
-    console.log(`Server draait op http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
